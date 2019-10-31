@@ -11,7 +11,7 @@ app.use(
         extended: true,
     })
 );
-app.use(cors);
+app.use(cors());
 
 app.get('/', (request, response) => {
     response.json({ info: 'Node.js, Express, and Postgres API' });
