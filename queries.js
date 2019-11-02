@@ -20,8 +20,9 @@ const getAllSignalsGPSEntries = (request, response) => {
 }
 
 const addSignalGPSEntry = (request, response) => {
+    console.log(request.body);
     const { Phone_type, MNO, date, signal_strengh_dbm, Latitude, Longitude } = request.body;
-    pool.query('insert into signalgps values ($1, $2, $3, $4, $5, $6)', [Phone_type, MNO, date, signal_strengh_dbm, Latitude, Longitude], (error, results) => {
+    pool.query('INSERT INTO signalgps (type, MNO, time, signal_strengh, Latitude, Longitude) VALUES ($1, $2, $3, $4, $5, $6)', [Phone_type, MNO, date, signal_strengh_dbm, Latitude, Longitude], (error, results) => {
         if (error) {
             throw error;
         }
