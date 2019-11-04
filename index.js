@@ -8,7 +8,7 @@ const db = require('./queries');
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
-        extended: true,
+        extended: false,
     })
 );
 app.use(cors());
@@ -18,7 +18,7 @@ app.get('/', (request, response) => {
 });
 
 app.get('/signalgps', db.getAllSignalsGPSEntries);
-
+app.get('/signalgps/interval', db.getSignalsGPSEntriesByInterval);
 app.post('/signalgps', db.addSignalGPSEntry);
 
 app.listen(port, () => {

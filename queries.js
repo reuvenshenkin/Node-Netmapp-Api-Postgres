@@ -15,8 +15,21 @@ const getAllSignalsGPSEntries = (request, response) => {
         }
 
         response.status(200).json(results.rows);
-        console.log(results.json);
-    })
+    });
+}
+
+const getSignalsGPSEntriesByInterval = (request, response) => {
+    const intervalInHours = parseInt(request.query.intervalInHours);
+    console.log(intervalInHours);
+    if (intervalInHours) {
+        pool.query(`SELECT * FROM signalgps AS "signal" WHERE to_timestamp("signal"."time",'Dy Mon DD YYYY HH24:MI:SS') BETWEEN NOW() - INTERVAL '${intervalInHours} HOURS' AND NOW()`, (error, results) => {
+            if (error) {
+                throw error
+            }
+
+            response.status(200).json(results.rows);
+        });
+    }
 }
 
 const addSignalGPSEntry = (request, response) => {
@@ -34,5 +47,6 @@ const addSignalGPSEntry = (request, response) => {
 
 module.exports = {
     getAllSignalsGPSEntries,
+    getSignalsGPSEntriesByInterval,
     addSignalGPSEntry
 };
